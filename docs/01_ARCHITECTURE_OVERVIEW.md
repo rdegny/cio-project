@@ -1,4 +1,4 @@
-\# AI CIO Architecture Overview
+﻿\# AI CIO Architecture Overview
 
 
 
@@ -114,15 +114,15 @@ The system should be organized into four major layers:
 
 Interface Layer
 
-↓
+â†“
 
 Application Service Layer
 
-↓
+â†“
 
 Data / Intelligence Layer
 
-↓
+â†“
 
 External Provider Layer
 
@@ -446,11 +446,11 @@ Correct pattern:
 
 App
 
-→ AI Service
+â†’ AI Service
 
-→ AI Provider Adapter
+â†’ AI Provider Adapter
 
-→ External AI API
+â†’ External AI API
 
 ```
 
@@ -498,49 +498,49 @@ The exact hosting choice should be recorded in `/docs/14\_DECISION\_LOG.md`.
 
 &#x20;                        User
 
-&#x20;                         │
+&#x20;                         â”‚
 
-&#x20;                         ▼
+&#x20;                         â–¼
 
 &#x20;                 Next.js Frontend
 
-&#x20;                         │
+&#x20;                         â”‚
 
-&#x20;                         ▼
+&#x20;                         â–¼
 
 &#x20;             Internal App Services
 
-&#x20;                         │
+&#x20;                         â”‚
 
-&#x20;       ┌─────────────────┼─────────────────┐
+&#x20;       â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;       │                 │                 │
+&#x20;       â”‚                 â”‚                 â”‚
 
-&#x20;       ▼                 ▼                 ▼
+&#x20;       â–¼                 â–¼                 â–¼
 
 &#x20;Portfolio Service   Market Service     AI Service
 
-&#x20;       │                 │                 │
+&#x20;       â”‚                 â”‚                 â”‚
 
-&#x20;       ▼                 ▼                 ▼
+&#x20;       â–¼                 â–¼                 â–¼
 
 &#x20;PostgreSQL DB     Provider Adapters   AI Provider
 
-&#x20;       │                 │                 │
+&#x20;       â”‚                 â”‚                 â”‚
 
-&#x20;       ▼                 ▼                 ▼
+&#x20;       â–¼                 â–¼                 â–¼
 
 &#x20;Reports / Logs    Market Data APIs    AI Model API
 
-&#x20;       │
+&#x20;       â”‚
 
-&#x20;       ▼
+&#x20;       â–¼
 
 &#x20;Notification Service
 
-&#x20;       │
+&#x20;       â”‚
 
-&#x20;       ▼
+&#x20;       â–¼
 
 &#x20;Email / In-App Alerts
 
@@ -1000,9 +1000,9 @@ Business logic should live in services, not UI components.
 
 Page / Component
 
-→ Internal Service
+â†’ Internal Service
 
-→ Database or Provider Adapter
+â†’ Database or Provider Adapter
 
 ```
 
@@ -1016,13 +1016,13 @@ Example:
 
 Portfolio Page
 
-→ PortfolioService
+â†’ PortfolioService
 
-→ Database
+â†’ Database
 
-→ MarketDataService
+â†’ MarketDataService
 
-→ MarketDataProvider
+â†’ MarketDataProvider
 
 ```
 
@@ -1036,11 +1036,11 @@ Portfolio Page
 
 Portfolio Page
 
-→ Raw database queries
+â†’ Raw database queries
 
-→ External market data API
+â†’ External market data API
 
-→ Portfolio calculations inside React component
+â†’ Portfolio calculations inside React component
 
 ```
 
@@ -1104,9 +1104,9 @@ The app should never directly depend on vendor-specific API responses in UI comp
 
 MarketDataService
 
-→ MarketDataProvider interface
+â†’ MarketDataProvider interface
 
-→ PolygonProvider / TwelveDataProvider / AlphaVantageProvider
+â†’ PolygonProvider / TwelveDataProvider / AlphaVantageProvider
 
 ```
 
@@ -1120,7 +1120,7 @@ MarketDataService
 
 Dashboard component
 
-→ fetch("https://provider-api.com/prices")
+â†’ fetch("https://provider-api.com/prices")
 
 ```
 
@@ -1252,15 +1252,15 @@ Every important data flow should be traceable.
 
 External Market API
 
-→ MarketDataProvider
+â†’ MarketDataProvider
 
-→ MarketDataService
+â†’ MarketDataService
 
-→ Database Cache
+â†’ Database Cache
 
-→ PortfolioService / WatchlistService / AlertService
+â†’ PortfolioService / WatchlistService / AlertService
 
-→ Dashboard / Reports / Notifications
+â†’ Dashboard / Reports / Notifications
 
 ```
 
@@ -1274,15 +1274,15 @@ External Market API
 
 Scheduled Job or N8N Trigger
 
-→ WatchlistService
+â†’ WatchlistService
 
-→ MarketDataService
+â†’ MarketDataService
 
-→ AlertService
+â†’ AlertService
 
-→ NotificationService
+â†’ NotificationService
 
-→ Email / In-App Alert
+â†’ Email / In-App Alert
 
 ```
 
@@ -1296,17 +1296,17 @@ Scheduled Job or N8N Trigger
 
 Scheduled Trigger
 
-→ Data Collection Services
+â†’ Data Collection Services
 
-→ AIAnalysisService
+â†’ AIAnalysisService
 
-→ ReportService
+â†’ ReportService
 
-→ Database
+â†’ Database
 
-→ NotificationService
+â†’ NotificationService
 
-→ Email / Dashboard Report
+â†’ Email / Dashboard Report
 
 ```
 
@@ -1320,15 +1320,15 @@ Scheduled Trigger
 
 News Provider
 
-→ NewsService
+â†’ NewsService
 
-→ Relevance Scoring
+â†’ Relevance Scoring
 
-→ AIAnalysisService
+â†’ AIAnalysisService
 
-→ Stored Summary
+â†’ Stored Summary
 
-→ Dashboard / Email / Alert
+â†’ Dashboard / Email / Alert
 
 ```
 
@@ -1402,11 +1402,11 @@ Correct pattern:
 
 Application Service
 
-→ AIAnalysisService
+â†’ AIAnalysisService
 
-→ AI Provider Adapter
+â†’ AI Provider Adapter
 
-→ External AI Model
+â†’ External AI Model
 
 ```
 
@@ -1596,11 +1596,11 @@ Notifications should be separate from alert logic.
 
 AlertService
 
-→ creates alert
+â†’ creates alert
 
-→ NotificationService
+â†’ NotificationService
 
-→ sends email or in-app notification
+â†’ sends email or in-app notification
 
 ```
 
@@ -1614,7 +1614,7 @@ AlertService
 
 AlertService
 
-→ directly sends email using provider-specific code
+â†’ directly sends email using provider-specific code
 
 ```
 
