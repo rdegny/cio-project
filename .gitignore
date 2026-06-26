@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+
+# build outputs
+.next/
+dist/
+build/
+out/
+
+# environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local system files
+.DS_Store
+Thumbs.db
+
+# editor settings
+.vscode/
+.idea/
+
+# deployment
+.vercel/
+.railway/
+
+# cache
+.cache/
+.turbo/
