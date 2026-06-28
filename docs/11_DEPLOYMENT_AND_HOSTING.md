@@ -149,7 +149,29 @@ Real values must be stored in hosting provider secret settings, not Git.
 
 ---
 
-# 6. GitHub Workflow
+# 6. Local Development Database
+
+Local development uses PostgreSQL with Prisma migrations.
+
+Required local variable:
+
+```text
+DATABASE_URL
+```
+
+Local setup should use `.env.local`, which must remain uncommitted.
+
+The first local migration can be applied with:
+
+```text
+pnpm prisma:migrate:dev
+```
+
+If Prisma reports that it cannot reach `localhost:5432`, PostgreSQL is not running locally or `DATABASE_URL` points to the wrong host or port.
+
+---
+
+# 7. GitHub Workflow
 
 Recommended branch flow:
 
@@ -164,23 +186,27 @@ For early solo development, direct commits may be acceptable, but Codex changes 
 
 ---
 
-# 7. Build Process
+# 8. Build Process
 
-Expected future commands may include:
+Current local validation commands:
 
 ```text
-npm install
-npm run lint
-npm run test
-npm run build
-npx prisma migrate deploy
+pnpm prisma:validate
+pnpm prisma:generate
+pnpm typecheck
+pnpm lint
+pnpm build
 ```
 
-Codex should update this document when actual commands are finalized.
+Expected future production migration command:
+
+```text
+pnpm prisma migrate deploy
+```
 
 ---
 
-# 8. Database Migrations
+# 9. Database Migrations
 
 Production migrations should be deliberate.
 
@@ -193,7 +219,7 @@ Rules:
 
 ---
 
-# 9. N8N Deployment
+# 10. N8N Deployment
 
 N8N may be self-hosted on Hostinger VPS.
 
@@ -205,7 +231,7 @@ Webhook secrets should be rotated if exposed.
 
 ---
 
-# 10. Logs
+# 11. Logs
 
 The app should log:
 
@@ -220,7 +246,7 @@ Production logs should not expose secrets.
 
 ---
 
-# 11. Backups
+# 12. Backups
 
 Backup priorities:
 
@@ -234,7 +260,7 @@ Database backups should be automated once real portfolio data is stored.
 
 ---
 
-# 12. Rollback
+# 13. Rollback
 
 Rollback plan should include:
 
@@ -247,7 +273,7 @@ Avoid irreversible migrations early.
 
 ---
 
-# 13. Deployment Checklist
+# 14. Deployment Checklist
 
 Before production deployment:
 
@@ -266,6 +292,6 @@ Before production deployment:
 
 ---
 
-# 14. Final Principle
+# 15. Final Principle
 
 The best early deployment is the one that is secure, understandable, affordable, and easy to recover.
