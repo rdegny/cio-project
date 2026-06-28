@@ -2,7 +2,7 @@
 
 AI CIO is a personal investment intelligence platform for long-term portfolio monitoring, watchlists, research, alerts, reports, and future AI-assisted analysis.
 
-This repository currently contains the initial Next.js foundation, Prisma database foundation, and local Auth.js / NextAuth foundation. It intentionally does not include portfolio features, market data, AI providers, N8N workflows, or email delivery yet.
+This repository currently contains the initial Next.js foundation, Prisma database foundation, local Auth.js / NextAuth foundation, and a simple manual portfolio workflow. It intentionally does not include market data, AI providers, N8N workflows, brokerage integrations, or email delivery yet.
 
 ## Stack
 
@@ -133,6 +133,17 @@ Main app routes are protected by NextAuth middleware:
 The initial local auth flow uses a simple credentials provider backed by `AUTH_LOCAL_EMAIL` and `AUTH_LOCAL_PASSWORD` in `.env.local`. On successful sign-in, the app creates or reuses the matching `User` record and ensures a `UserSettings` record exists.
 
 This is an MVP local-development auth foundation. Do not commit real auth secrets.
+
+## Portfolio Manual Entry
+
+The `/portfolio` page supports the first manual tracking workflow:
+
+- create a portfolio
+- add BUY, SELL, DIVIDEND, and ADJUSTMENT transactions
+- recompute derived holdings from transaction history
+- view basic holdings and recent transaction history
+
+Transactions remain the source of truth. `PortfolioHolding` records are derived current state. Market prices, market value, and unrealized gain/loss remain pending until a market data provider is added.
 
 ## Database Troubleshooting
 
