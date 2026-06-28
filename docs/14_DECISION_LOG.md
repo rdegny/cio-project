@@ -642,7 +642,6 @@ Initial email provider
 Initial news provider
 Initial fundamentals provider
 Initial N8N hosting setup
-Database ID strategy: cuid vs uuid
 Exact Auth.js provider configuration
 Whether to add shadcn/ui later
 Whether to support CSV import in Version 2
@@ -670,7 +669,44 @@ Native mobile app
 
 ---
 
-# 21. Final Principle
+# 21. Decision 016: Use Prisma CUIDs for Initial Database IDs
+
+Date: 2026-06-27  
+Status: Accepted
+
+Decision:
+
+Use Prisma `cuid()` string IDs for the initial database models.
+
+Context:
+
+The first Prisma schema batch needs consistent primary keys for `User`, `UserSettings`, `Portfolio`, and `Company`. The database schema document left the ID strategy open between cuid, uuid, and database-generated uuid.
+
+Options considered:
+
+- Prisma `cuid()` string IDs
+- Prisma `uuid()` string IDs
+- Database-generated UUIDs
+
+Chosen option:
+
+Use Prisma `cuid()` string IDs.
+
+Reason:
+
+This keeps IDs application-generated, simple to use in Prisma, and consistent with the documentation's string ID recommendation. It also avoids introducing database extensions during the first schema foundation batch.
+
+Consequences:
+
+Initial models use `String @id @default(cuid())`. A future change to UUIDs would require an explicit migration plan.
+
+Follow-up needed:
+
+Keep future Prisma models consistent with this ID strategy unless a later decision replaces it.
+
+---
+
+# 22. Final Principle
 
 If a decision affects architecture, cost, security, database schema, provider choice, user control, or Codex workflow, record it here.
 
