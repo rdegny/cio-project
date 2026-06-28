@@ -743,7 +743,44 @@ Before production deployment, replace or harden the provider strategy and record
 
 ---
 
-# 23. Final Principle
+# 23. Decision 018: Use Simple MVP Portfolio Adjustment Convention
+
+Date: 2026-06-28
+Status: Accepted
+
+Decision:
+
+For the initial portfolio calculation service, `ADJUSTMENT` transactions use `quantity` as a signed share-count delta.
+
+Context:
+
+Batch 6 adds portfolio service logic that derives current holdings from transaction history. The schema supports an `ADJUSTMENT` transaction type, but tax lots, splits, return of capital, and brokerage-specific corrections are intentionally out of scope for the MVP.
+
+Options considered:
+
+- Defer adjustment support entirely
+- Treat adjustment as a signed share-count correction
+- Add detailed split, tax-lot, and return-of-capital logic immediately
+
+Chosen option:
+
+Treat adjustment as a signed share-count correction.
+
+Reason:
+
+This keeps the MVP simple while still allowing manual position corrections. Positive adjustments increase share quantity without adding cost basis. Negative adjustments reduce share quantity and reduce cost basis using the current average cost. Adjustments cannot reduce a holding below zero.
+
+Consequences:
+
+This convention is not a complete tax or corporate-action model. Future split, tax-lot, return-of-capital, and realized-gain logic will need explicit design before being added.
+
+Follow-up needed:
+
+Revisit adjustment semantics before adding brokerage imports, stock splits, tax reporting, or realized gain/loss reporting.
+
+---
+
+# 24. Final Principle
 
 If a decision affects architecture, cost, security, database schema, provider choice, user control, or Codex workflow, record it here.
 

@@ -90,6 +90,7 @@ pnpm dev
 pnpm prisma:generate
 pnpm prisma:validate
 pnpm prisma:migrate:dev
+pnpm test
 pnpm typecheck
 pnpm lint
 pnpm build
@@ -99,16 +100,22 @@ pnpm build
 
 Prisma is configured for PostgreSQL in `prisma/schema.prisma`.
 
-The first schema batch includes only:
+The current schema foundation includes:
 
 - `User`
 - `UserSettings`
 - `Portfolio`
 - `Company`
+- `Transaction`
+- `PortfolioHolding`
 
-Transactions remain the planned source of truth for portfolio history, but the `Transaction` model is intentionally deferred to a later batch.
+Transactions are the source of truth for portfolio history. `PortfolioHolding` is derived current state and can be recomputed from transaction history.
 
-The first migration lives at `prisma/migrations/20260628000100_initial_foundation/migration.sql`.
+Portfolio calculation tests can be run with:
+
+```bash
+pnpm test
+```
 
 ## Authentication Foundation
 
