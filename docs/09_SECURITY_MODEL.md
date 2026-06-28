@@ -70,15 +70,14 @@ Public pages may include:
 /login
 ```
 
-The exact auth provider is an open decision and must be recorded in `/docs/14_DECISION_LOG.md`.
+The initial auth foundation uses Auth.js / NextAuth with local credentials stored in environment variables, as recorded in `/docs/14_DECISION_LOG.md`.
 
-Possible providers:
+Future production provider options may still include:
 
 ```text
-Auth.js / NextAuth
+OAuth through Auth.js / NextAuth
 Clerk
 Supabase Auth
-Custom auth
 ```
 
 ---
@@ -141,6 +140,8 @@ Expected future environment variables:
 DATABASE_URL
 NEXTAUTH_SECRET
 NEXTAUTH_URL
+AUTH_LOCAL_EMAIL
+AUTH_LOCAL_PASSWORD
 OPENAI_API_KEY
 MARKET_DATA_API_KEY
 NEWS_API_KEY

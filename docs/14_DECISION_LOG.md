@@ -642,7 +642,6 @@ Initial email provider
 Initial news provider
 Initial fundamentals provider
 Initial N8N hosting setup
-Exact Auth.js provider configuration
 Whether to add shadcn/ui later
 Whether to support CSV import in Version 2
 Market data cache timing
@@ -706,7 +705,45 @@ Keep future Prisma models consistent with this ID strategy unless a later decisi
 
 ---
 
-# 22. Final Principle
+# 22. Decision 017: Use Local Credentials for Initial Auth Foundation
+
+Date: 2026-06-28
+Status: Accepted
+
+Decision:
+
+Use Auth.js / NextAuth with a simple local credentials provider for the initial authentication foundation.
+
+Context:
+
+AI CIO needs protected routes and a stable `userId` before user-owned portfolio data is implemented. The project has accepted Auth.js / NextAuth as the initial authentication plan, but exact provider configuration was still open. This batch should not add external OAuth provider integrations or real provider secrets.
+
+Options considered:
+
+- Auth.js / NextAuth with local credentials
+- Auth.js / NextAuth with OAuth provider
+- Prisma adapter with full Auth.js account/session tables
+- Custom authentication
+
+Chosen option:
+
+Auth.js / NextAuth with local credentials stored in environment variables for local development.
+
+Reason:
+
+This keeps the authentication foundation small, avoids real OAuth secrets, avoids extra provider integrations, and still creates a durable `User` record for future `userId` scoping.
+
+Consequences:
+
+Protected app routes require sign-in. Successful local sign-in creates or reuses a `User` record and ensures a `UserSettings` record exists. This is not a final production auth provider strategy.
+
+Follow-up needed:
+
+Before production deployment, replace or harden the provider strategy and record any replacement decision.
+
+---
+
+# 23. Final Principle
 
 If a decision affects architecture, cost, security, database schema, provider choice, user control, or Codex workflow, record it here.
 

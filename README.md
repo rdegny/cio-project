@@ -2,7 +2,7 @@
 
 AI CIO is a personal investment intelligence platform for long-term portfolio monitoring, watchlists, research, alerts, reports, and future AI-assisted analysis.
 
-This repository currently contains the initial Next.js foundation and the Prisma database foundation. It intentionally does not include authentication, portfolio features, market data, AI providers, N8N workflows, or email delivery yet.
+This repository currently contains the initial Next.js foundation, Prisma database foundation, and local Auth.js / NextAuth foundation. It intentionally does not include portfolio features, market data, AI providers, N8N workflows, or email delivery yet.
 
 ## Stack
 
@@ -12,6 +12,7 @@ This repository currently contains the initial Next.js foundation and the Prisma
 - Tailwind CSS
 - Prisma
 - PostgreSQL
+- Auth.js / NextAuth
 
 ## Local Setup
 
@@ -47,25 +48,40 @@ This repository currently contains the initial Next.js foundation and the Prisma
    DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ai_cio?schema=public"
    ```
 
-5. Generate the Prisma client:
+5. Add local auth values to `.env.local`:
+
+   ```env
+   NEXTAUTH_URL="http://localhost:3000"
+   NEXTAUTH_SECRET="replace-with-generated-local-secret"
+   AUTH_LOCAL_EMAIL="you@example.com"
+   AUTH_LOCAL_PASSWORD="replace-with-local-login-password"
+   ```
+
+   Generate a local secret with:
+
+   ```bash
+   openssl rand -base64 32
+   ```
+
+6. Generate the Prisma client:
 
    ```bash
    pnpm prisma:generate
    ```
 
-6. Apply the first local database migration:
+7. Apply the first local database migration:
 
    ```bash
    pnpm prisma:migrate:dev
    ```
 
-7. Start the local app:
+8. Start the local app:
 
    ```bash
    pnpm dev
    ```
 
-8. Open `http://localhost:3000`.
+9. Open `http://localhost:3000`.
 
 ## Useful Commands
 
@@ -94,6 +110,23 @@ Transactions remain the planned source of truth for portfolio history, but the `
 
 The first migration lives at `prisma/migrations/20260628000100_initial_foundation/migration.sql`.
 
+## Authentication Foundation
+
+Main app routes are protected by NextAuth middleware:
+
+- `/dashboard`
+- `/portfolio`
+- `/watchlist`
+- `/research`
+- `/themes`
+- `/alerts`
+- `/reports`
+- `/settings`
+
+The initial local auth flow uses a simple credentials provider backed by `AUTH_LOCAL_EMAIL` and `AUTH_LOCAL_PASSWORD` in `.env.local`. On successful sign-in, the app creates or reuses the matching `User` record and ensures a `UserSettings` record exists.
+
+This is an MVP local-development auth foundation. Do not commit real auth secrets.
+
 ## Database Troubleshooting
 
 If `pnpm prisma:migrate:dev` fails with `P1001: Can't reach database server at localhost:5432`, PostgreSQL is not running or is not listening on port `5432`. Start your local PostgreSQL service, then retry the command.
@@ -108,6 +141,14 @@ If you change `DATABASE_URL`, rerun:
 pnpm prisma:validate
 pnpm prisma:migrate:dev
 ```
+
+## Auth Troubleshooting
+
+If sign-in fails, confirm `AUTH_LOCAL_EMAIL` and `AUTH_LOCAL_PASSWORD` exist in `.env.local` and match the values entered on `/login`.
+
+If NextAuth reports a missing secret, set `NEXTAUTH_SECRET` in `.env.local` and restart `pnpm dev`.
+
+If protected routes keep redirecting to `/login`, confirm cookies are enabled and `NEXTAUTH_URL` matches the local URL you are using.
 
 ## Current Routes
 

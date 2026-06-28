@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { getCurrentSession } from "@/lib/auth/session";
+
 const navigationItems = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/portfolio", label: "Portfolio" },
@@ -11,7 +13,9 @@ const navigationItems = [
   { href: "/settings", label: "Settings" }
 ];
 
-export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
+export async function AppShell({ children }: Readonly<{ children: React.ReactNode }>) {
+  const session = await getCurrentSession();
+
   return (
     <div className="min-h-screen">
       <header className="border-b border-line/80 bg-paper/90 backdrop-blur">
@@ -24,17 +28,28 @@ export function AppShell({ children }: Readonly<{ children: React.ReactNode }>) 
               Investment Command Center
             </span>
           </Link>
-          <nav aria-label="Primary navigation" className="flex flex-wrap gap-2">
-            {navigationItems.map((item) => (
+          <div className="flex flex-col gap-3 lg:items-end">
+            <nav aria-label="Primary navigation" className="flex flex-wrap gap-2">
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-md border border-line bg-white px-3 py-2 text-sm font-medium text-ink transition hover:border-moss hover:text-moss focus:outline-none focus:ring-2 focus:ring-moss/35"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-700">
+              <span>{session?.user?.email}</span>
               <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-md border border-line bg-white px-3 py-2 text-sm font-medium text-ink transition hover:border-moss hover:text-moss focus:outline-none focus:ring-2 focus:ring-moss/35"
+                href="/api/auth/signout"
+                className="font-semibold text-moss transition hover:text-ink"
               >
-                {item.label}
+                Sign out
               </Link>
-            ))}
-          </nav>
+            </div>
+          </div>
         </div>
       </header>
       <main className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6 lg:px-8">
